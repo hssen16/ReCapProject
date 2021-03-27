@@ -14,5 +14,8 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Model> Models { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
     }
 }

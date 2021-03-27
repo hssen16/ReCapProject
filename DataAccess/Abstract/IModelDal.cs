@@ -5,5 +5,6 @@ namespace DataAccess.Abstract
 {
     public interface IModelDal:IEntityRepository<Model>
     {
+        Model GetById(int id);
     }
 }
