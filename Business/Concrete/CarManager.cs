@@ -5,6 +5,7 @@ using System.Text;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,7 +21,7 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-
+        [CacheAspect()]
         public IDataResult<IList<Car>> GetAll(Expression<Func<Car, bool>> filter = null)
         {
             return new SuccessDataResult<IList<Car>>(_carDal.GetAll(filter));
@@ -50,21 +51,21 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Car>(_carDal.GetById(id));
         }
-
+        [CacheRemoveAspect("ICarService.Get")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
         }
-
+        [CacheRemoveAspect("ICarService.Get")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
         }
-
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
